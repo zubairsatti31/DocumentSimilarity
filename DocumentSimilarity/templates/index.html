@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Similarity Checker</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ff6200;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #ff6200;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(255, 98, 0, 0.5);
+        }
+        label {
+            font-size: 1.2em;
+            margin: 10px 0;
+            display: block;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+            color: #ff6200;
+        }
+        input[type="submit"] {
+            background-color: #ff6200;
+            color: #000000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        input[type="submit"]:hover {
+            background-color: #e65c00;
+        }
+        h3 {
+            margin: 15px 0;
+        }
+        h4 {
+            margin: 10px 0;
+            color: #ff8c40;
+        }
+        .error {
+            color: #ff4040;
+        }
+    </style>
+</head>
+<body>
+    <h1>Document Similarity Checker</h1>
+    <form method="post" enctype="multipart/form-data">
+        <label for="file1">Upload First Document (.txt, .docx, .pdf):</label>
+        <input type="file" id="file1" name="file1" accept=".txt,.docx,.pdf"><br><br>
+        <label for="file2">Upload Second Document (.txt, .docx, .pdf):</label>
+        <input type="file" id="file2" name="file2" accept=".txt,.docx,.pdf"><br><br>
+        <input type="submit" value="Calculate Similarity">
+    </form>
+    {% if error %}
+        <h3 class="error">{{ error }}</h3>
+    {% elif similarity is not none %}
+        <h3>Similarity: {{ similarity|round(2) }}%</h3>
+        {% if common_words %}
+            <h4>Common Words: {{ common_words|join(', ') }}</h4>
+        {% else %}
+            <h4>No common words found.</h4>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
